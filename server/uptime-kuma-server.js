@@ -118,12 +118,8 @@ class UptimeKumaServer {
         UptimeKumaServer.monitorTypeList["tailscale-ping"] = new TailscalePing();
         UptimeKumaServer.monitorTypeList["dns"] = new DnsMonitorType();
 
-        this.io = new Server(this.httpServer,{
-            cors: {
-                origin: 'http://localhost:3000',
-                methods: ['GET', 'POST'],
-            },
-        });
+        this.io = new Server(this.httpServer);
+        this.io.origins('http://localhost:3000');
     }
 
     /**
