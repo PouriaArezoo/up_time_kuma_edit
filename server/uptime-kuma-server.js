@@ -117,10 +117,16 @@ class UptimeKumaServer {
         UptimeKumaServer.monitorTypeList["real-browser"] = new RealBrowserMonitorType();
         UptimeKumaServer.monitorTypeList["tailscale-ping"] = new TailscalePing();
         UptimeKumaServer.monitorTypeList["dns"] = new DnsMonitorType();
+        
 
+        this.httpServer.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000:*');
+        this.httpServer.setHeader('Access-Control-Request-Method', '*');
+        this.httpServer.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST,GET');
+        this.httpServer.setHeader('Access-Control-Allow-Headers', '*');
+    
         this.io = new Server(this.httpServer);
         // this.io.origins('http://localhost:3000');
-        this.io.set('origins', 'http://localhost:3000');
+        // this.io.set('origins', 'http://localhost:3000');
     }
 
     /**
