@@ -119,7 +119,8 @@ class UptimeKumaServer {
         UptimeKumaServer.monitorTypeList["dns"] = new DnsMonitorType();
 
         this.io = new Server(this.httpServer);
-        this.io.origins('http://localhost:3000');
+        // this.io.origins('http://localhost:3000');
+        this.io.set('origins', 'http://localhost:3000');
     }
 
     /**
