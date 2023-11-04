@@ -3,6 +3,7 @@ const https = require("https");
 const fs = require("fs");
 const http = require("http");
 const { Server } = require("socket.io");
+const cors = require("cors");
 
 
 const { R } = require("redbean-node");
@@ -91,6 +92,9 @@ class UptimeKumaServer {
 
         log.debug("server", "Creating express and socket.io instance");
         this.app = express();
+        this.app.use(cors());
+
+
         if (sslKey && sslCert) {
             log.info("server", "Server Type: HTTPS");
             this.httpServer = https.createServer({
@@ -124,9 +128,12 @@ class UptimeKumaServer {
         this.httpServer.setHeader('Access-Control-Allow-Methods', 'OPTIONS,POST,GET');
         this.httpServer.setHeader('Access-Control-Allow-Headers', '*');
     
-        this.io = new Server(this.httpServer);
-        // this.io.origins('http://localhost:3000');
-        // this.io.set('origins', 'http://localhost:3000');
+        this.io = new Server(this.httpServer,{
+            cors: {
+                origin: "http://localhost:3000",
+                methods: ["GET", "POST"],
+            },
+        });
     }
 
     /**
